@@ -1,16 +1,12 @@
 package ru.ivos.sum_of_numbers.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import ru.ivos.sum_of_numbers.R
 import ru.ivos.sum_of_numbers.databinding.FragmentChooseLevelBinding
-import ru.ivos.sum_of_numbers.domain.entities.GameResult
 import ru.ivos.sum_of_numbers.domain.entities.Level
 
 class ChooseLevelFragment : Fragment() {
