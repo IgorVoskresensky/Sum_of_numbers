@@ -2,7 +2,6 @@ package ru.ivos.sum_of_numbers.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,10 @@ import ru.ivos.sum_of_numbers.domain.entities.Question
 import ru.ivos.sum_of_numbers.domain.usecases.GenerateQuestionUseCase
 import ru.ivos.sum_of_numbers.domain.usecases.GetGameSettingsUseCase
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(
+    private val application: Application,
+    private val level: Level
+) : ViewModel() {
 
 
 
@@ -24,10 +26,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
 
-    private val context = application
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
+
 
     private var timer: CountDownTimer? = null
     private var countOfCorrectAnswers = 0
@@ -58,8 +59,11 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val gameResult: LiveData<GameResult> get() = _gameResult
 
 
-    fun startGame(level: Level) {
-        this.level = level
+    init {
+        startGame()
+    }
+
+    private fun startGame() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOfCorrectAnswers
         startTimer()
@@ -86,7 +90,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
         _percentOfCorrectAnswers.value = percent
         _progressAnswers.value = String.format(
-            context.resources.getString(R.string.progress_answers),
+            application.resources.getString(R.string.progress_answers),
             countOfCorrectAnswers,
             gameSettings.minCountOfCorrectAnswers
         )
