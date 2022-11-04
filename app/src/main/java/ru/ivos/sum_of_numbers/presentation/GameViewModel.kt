@@ -130,7 +130,7 @@ class GameViewModel(
         _gameResult.value = GameResult(
             winner = _enoughPercentOfCorrectAnswers.value == true && _enoughCountOfCorrectAnswers.value == true,
             countOfCorrectAnswers = countOfCorrectAnswers,
-            countIfQuestions = countOfQuestions,
+            countOfQuestions = countOfQuestions,
             gameSettings = gameSettings
         )
     }

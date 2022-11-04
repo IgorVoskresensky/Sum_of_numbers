@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.ivos.sum_of_numbers.R
 import ru.ivos.sum_of_numbers.databinding.FragmentGameFinishedBinding
-import ru.ivos.sum_of_numbers.domain.entities.GameResult
-import ru.ivos.sum_of_numbers.presentation.ChooseLevelFragment.Companion as ChooseLevelFragment1
+
 
 class GameFinishedFragment : Fragment() {
 
@@ -35,47 +32,8 @@ class GameFinishedFragment : Fragment() {
         binding.buttonRetry.setOnClickListener {
             retryGame()
         }
-        bindViews()
+        binding.gameResult = args.gameResult
     }
-
-    private fun bindViews() {
-        with(binding){
-            emojiResult.setImageResource(getSmileResId())
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.required_score),
-                args.gameResult.gameSettings.minCountOfCorrectAnswers
-            )
-            tvScoreAnswers.text = String.format(
-                getString(R.string.score_answers),
-                args.gameResult.countOfCorrectAnswers
-            )
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage),
-                args.gameResult.gameSettings.minPercentOfCorrectAnswers
-            )
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfCorrectAnswers()
-            )
-        }
-    }
-
-    private fun getPercentOfCorrectAnswers() = with(args.gameResult) {
-        if(countIfQuestions == 0) {
-            0
-        } else {
-            ((countOfCorrectAnswers / countIfQuestions.toDouble()) * 100).toInt()
-        }
-    }
-
-    private fun getSmileResId(): Int {
-        return if(args.gameResult.winner) {
-            R.drawable.ic_smile
-        } else {
-            R.drawable.ic_sad
-        }
-    }
-
 
     private fun retryGame() {
         findNavController().popBackStack()
