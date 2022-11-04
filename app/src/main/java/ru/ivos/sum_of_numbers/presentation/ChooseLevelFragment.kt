@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.ivos.sum_of_numbers.R
 import ru.ivos.sum_of_numbers.databinding.FragmentChooseLevelBinding
 import ru.ivos.sum_of_numbers.domain.entities.GameResult
@@ -45,23 +46,12 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFragment.newInstance(level))
-            .addToBackStack(GameFragment.NAME)
-            .commit()
+        findNavController().navigate(ChooseLevelFragmentDirections
+            .actionChooseLevelFragmentToGameFragment(level))
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-        const val CHOOSE_FRAGMENT_NAME = "ChooseLevelFragment"
-
-        fun newInstance(): ChooseLevelFragment {
-            return ChooseLevelFragment()
-        }
     }
 }

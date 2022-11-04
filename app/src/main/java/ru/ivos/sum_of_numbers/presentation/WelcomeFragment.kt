@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.ivos.sum_of_numbers.R
 import ru.ivos.sum_of_numbers.databinding.FragmentWelcomeBinding
 
@@ -32,10 +33,7 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchLevelFragment() {
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.main_container, ChooseLevelFragment.newInstance())
-            ?.addToBackStack(ChooseLevelFragment.CHOOSE_FRAGMENT_NAME)
-            ?.commit()
+        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
     }
 
     override fun onDestroyView() {
